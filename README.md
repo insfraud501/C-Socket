@@ -38,7 +38,7 @@ Send messages to server by typing your messages and pressing enter.
 Close the connection by typing in 'quit' in all lowercase and entering it in.
 
 # The whole purpose of this program is..
-						   Client -> Server socket
+	Client -> Server socket
 
 
 Server.exe: open up a remote server and await a connection to establish with a client.
