@@ -1,83 +1,50 @@
-# C-Socket
-Client -> Server Socket made in C. Client sends information while the server receives information.
+# Client-Server Communication Program
 
-**This program is only useable in Windows as it relies on the Windows Socket API.**
+This is a simple client-server communication program written in C that allows two machines to send and receive data over a network using TCP/IP sockets.
+## Requirements
 
-# How to Use Server and Client.exe
-After downloading, place Server.exe and Client.exe in a memorable path location
+- Windows operating system
+- Windows Socket API (WinSock2)
 
-## Booting up Server.exe
-Head to the command prompt by pressing Windows + R > cmd > Enter
+## Notes
+- This program is only usable in Windows as it uses the Windows Socket API.
+- The maximum amount of bytes allowed to send and receive is 2048.
 
-In the command prompt, enter in this command.
-    
-    cd <the path you placed Server.exe in>
+# Usage
+## Client
 
-This will direct any input into the path you just entered in.
-Next start up Server.exe with arguments in the command prompt. This part is important to get right.
+To run the client program, use the following command-line arguments:
 
-    server.exe -ip <The ip of the machine that server.exe will be running on> -p <an open port on the current machine to listen on>
-    
-After this command, server.exe should be booted up and listening for any connections. If not, make sure the port and ip are entered correctly.
+    client.exe -ip <ip_address> -p <port_number> -m <send_recv_mode>
 
-## Booting up Client.exe
-Head to the command prompt again by pressing Windows + R > cmd > Enter
+- <ip_address>: The IP address of the machine running the server program.
 
-In the command prompt, enter in this command.
-    
-    cd <the path you placed Client.exe in>
+- <port_number>: The port number used to communicate between the client and server.
 
-Like before, this will direct any input into the path you just entered in.
-Now start up Client.exe with arguments in the command prompt. This part is also important to get right.
+- <send_recv_mode>: The mode to run the program in. Use "send" to send data to the server, and "recv" to receive data from the server.
 
-    Client.exe -ip <The ip of the machine that Client.exe will be running on> -p <The port used passed through -p when booting up Server.exe>
+## Server
 
-After this, if everything is correct a connection should be established. 
+To run the server program, open up a new command prompt and run these command-line arguments: 
 
-Send messages to server by typing your messages and pressing enter.
-Close the connection by typing in 'quit' in all lowercase and entering it in.
+    server.exe -ip <ip_address> -p <port_number>
 
-# The whole purpose of this program is..
-	Client -> Server socket
+- <ip_address>: The IP address of the machine running the server program.
 
+- <port_number>: The port number used to communicate between the client and server.
 
-Server.exe: open up a remote server and await a connection to establish with a client.
+# How it Works
 
-Client.exe: Search for remote server on a port. Find > Request connection > Connect.
+The program uses TCP/IP sockets to establish a connection between the client and server machines. The server program creates a socket and binds it to a specified IP address and port number. It then listens for any incoming connections from a client. Once a connection is established, the server receives messages sent by the client and displays them on the console.
 
-In this program, the client connects to the remote server and once the connection is accepted BY the server, the client now has the ability to send messages to the server.
+The client program connects to the server by specifying the server's IP address and port number. It then sends data to the server in "send" mode, or receives data from the server in "recv" mode.
 
+If the client sends the message "quit", the connection with the server is closed and the sockets are cleaned up.
+# Error Codes
 
-# Below are the steps used in the program
+The program returns the following error codes:
 
-## On start Server.exe
--  Create Socket for client to connect to. 
--  Bind socket.
--  Listen for any possible connections in attempt to find the client looking for a signal.
-
-### On start Client.exe
--  Create socket to connect to server.
--  Attempt to connect to server.
-
-## Resume Server.exe
--  See attempt from client.exe to connect.
--  Accept the connection. 
--  Receive messages entered in by the client.
-
-***If the client enters in "quit" into their prompt, the connection will be broken and the sockets will be closed.***
-
-# Program Return Values
-Return -1
-- An Error has occured in the program. A WSA Error code will be provided.
-
-Return 0
-- The socket has been closed and the program has been cleaned up.
-
-Return 3
-- The client disconnected from the server. The server will be shut down.
-
-Return -2
-- An Error has occured in the programm. A WSA Error Code may not be provided.
-
-
-
+- -1: An error has occurred in the program. A WSA error code will be provided.
+- -2: Invalid command-line arguments were provided.
+- 0: The socket has been closed and the program has been cleaned up.
+- 3: The client disconnected from the server. The server will be shut down.
