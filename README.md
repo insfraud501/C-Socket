@@ -1,4 +1,4 @@
-# Client-Server Communication Program
+# C TCP Socket Program 
 
 This is a simple client-server communication program written in C that allows two machines to send and receive data over a network using TCP/IP sockets.
 ## Requirements
